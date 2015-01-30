@@ -1,24 +1,6 @@
 import daTools, json, datetime, urllib2, socket, os, pprint
 
-
-
-
-#print os.getcwd()
-
 host='www.dataphorism.link'
-
-#host='104.236.35.60'
-"""
-you had an issue, perhaps temporarily, where you were unable
-to ping www.dataphorism.link, likely a DNS issue.  You updated
-DNS settings in resolve.conf however it is possible such issues
-will occur again which will be problematic for tracking uptime
-
-Notes:
-#{'sape': 4139, 'guido': 4127, 'jack': 4098}
-
-"""
-
 lclHost = socket.gethostname()
 rDir = r'/var/www/data/js'
 lclFileName = '/sw/up.json'
@@ -37,14 +19,9 @@ upFile = json.loads(urllib2.urlopen(rUpFile).read())
 ###upFile now contains a json/dictionary
 #############################
 try: #useful for entries in the right format...
-    #print json.dumps(upFile, indent=4)
-
     #determine if this is first time since last update interval, add wiggle room
-
     #extract last uptime-start (note data stored as firstUp:lastUp)
-    print 12
     tEntries = list(upFile[lclHost].keys())
-    print 13
     tEntries.sort()
     tEntries.reverse()
     lastKey = tEntries[0]
@@ -77,20 +54,8 @@ try: #useful for entries in the right format...
     
 except:
     upFile[lclHost]={str(datetime.datetime.now()):str(datetime.datetime.now())}
-    #comment out error later...
-    #raise('oops')
-
-
-
-
-#dtTime = datetime.datetime.strptime(strTime, '%Y-%m-%d %H:%M:%S.%f')
-
-#raise('oops')
-
 #############################
 #update local host uptime entry
-
-
 #save local copy of upFile as formated json file
 
 lclFile = open(lclFileName,'w')
