@@ -69,4 +69,6 @@ ssh.put(lclFileName, rDir+'/'+'up.json')
 
 ssh.close()
 
+#remove local file to keep git dir clean
+os.remove(lclFileName)
 print "done!"
