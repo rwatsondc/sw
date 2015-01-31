@@ -2,6 +2,7 @@ import daTools, json, datetime, urllib2, socket, os, pprint
 
 host='www.dataphorism.link'
 lclHost = socket.gethostname()
+print lclHost
 rDir = r'/var/www/data/js'
 lclFileName = '/sw/up.json'
 #upInterval is number of minutes between cronjobs that update server
@@ -30,6 +31,8 @@ try: #useful for entries in the right format...
     lastUp = datetime.datetime.strptime(upFile[lclHost][lastKey], '%Y-%m-%d %H:%M:%S.%f')
     rightNow = datetime.datetime.now()
     timeDelta = rightNow - lastUp
+    print "time delta", timeDelta.seconds, '/', timeInterval
+
     if timeDelta.seconds > timeInterval:
         #new entry!
         print 'System has not checked-in within specified time interval\ncreating new entry'
@@ -40,15 +43,7 @@ try: #useful for entries in the right format...
         print 'updating last entry'
         upFile[lclHost][lastKey]=str(datetime.datetime.now())
         timeDelta = lastUp - lastStart
-    if timeDelta.seconds > timeInterval:
-        #new entry!
-        print 0
-        upFile[lclHost]={str(datetime.datetime.now()):str(datetime.datetime.now())}
-        pass
-    else:
-        #update entry!
-        print 1
-        upFile[lclHost][lastKey]=str(datetime.datetime.now())
+
         
         
     
