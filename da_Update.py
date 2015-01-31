@@ -15,7 +15,6 @@ daLogIn=json.loads(open('/pw/pw.json','r').read())[host]
 #Load remote uptime file
 rUpFile = r'http://www.dataphorism.link/data/js/up.json'
 
-print 11
 upFile = json.loads(urllib2.urlopen(rUpFile).read())
 ###upFile now contains a json/dictionary
 #############################
@@ -48,6 +47,7 @@ try: #useful for entries in the right format...
         
     
 except:
+    print "adding first entry in series"
     upFile[lclHost]={str(datetime.datetime.now()):str(datetime.datetime.now())}
 #############################
 #update local host uptime entry
