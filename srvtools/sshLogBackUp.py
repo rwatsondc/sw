@@ -1,6 +1,6 @@
 """
 
-Simple python script to sort apache log by IP address and save to file based
+Simple python script to sort ssh log by IP address and save to file based
 on IP name.
 
 This is updated to handle multiple log sites in a list
