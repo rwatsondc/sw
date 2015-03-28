@@ -21,7 +21,7 @@ def angle_between(v1, v2):
 def simpVector(origin, dest):
     return [dest[0]-origin[0], dest[1]-origin[1]]
 
-inFile = r'/data/working/access2.master.log.json'
+inFile = r'/data/working/access2.master.log.date.json'
 
 inData = json.loads(open(inFile,'r').read())
 
@@ -60,7 +60,7 @@ for key in inData:
         loopCount = loopCount + 1
         if loopCount > loopEnd:
             pass
-            break
+            #break
         #construct dest vector
         destPnt = [inData[key]['x'],inData[key]['y']]
         destVector = simpVector(originPnt, destPnt)
@@ -74,21 +74,23 @@ for key in inData:
         thWidth = np.deg2rad(degWidth/2.0)
         #account for 'sweep' of width
         curTheta = curTheta + thWidth
+        """
         print np.rad2deg(curTheta)
         print destVector
         print destPnt[1],',',destPnt[0]
+        """
         #next figure out bottom, radius from time
         minTime = datetime.datetime.strptime(inData[key]['minTime'],"%Y-%m-%d %H:%M:%S")
         maxTime = datetime.datetime.strptime(inData[key]['maxTime'],"%Y-%m-%d %H:%M:%S")
         curTime = datetime.datetime.now()
+        print minTime, maxTime
+        
         #radius logic
         """
-bottom is straight forward, radius is measured from bottom not origin!
 radius = 0 is now
-maxTime - minTme = radius
-curTime - maxTime = bottom
+curTime - maxTme = bottom
+curTime - minTime = radius
         """
-        #raise('oops')
         #color logic:
         if inData[key]['code'][:2]=='20':
             color='g'
@@ -99,11 +101,19 @@ curTime - maxTime = bottom
         else:
             color='b'
             
-        bottom = (curTime-maxTime).days
-        radius = (maxTime - minTime).days+2
+        bottom = (curTime-maxTime).days -1.5
+        #radius is measure from bottom, not center, set to 1 for 1 day
+        radius = 3
+        print bottom, radius
+        
+        print "new plot segment"
         bars = ax.bar(curTheta,radius, width=thWidth, linewidth=0, color=color,bottom=bottom, alpha=0.6)
         #break
 #plt.axis('off')
+#bars = ax.bar(curTheta,5,bottom=5, alpha=0.6)
+
 plt.show()
+
+
 
 print "Done!"
