@@ -21,7 +21,7 @@ cv.SetCaptureProperty(capture, 4, 720)
 header = 'imgName,curTime,elpTime,gps_time,gps_vel, gps_heading, gps_lon,gps_lat,gps_alt\n'
 logFile.write(header)
 
-for i in range(1500):
+for i in range(2000):
     #print 1
     curTime = str(datetime.datetime.now())
     imgName = 'testImg'+str(i).zfill(5)+'.jpg'
